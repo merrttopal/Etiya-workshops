@@ -2,10 +2,8 @@ package com.work.dataAccess.abstracs;
 
 import com.work.entities.concrates.Brand;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-
-public interface BrandRepository {
-    List<Brand> getAll();
+public interface BrandRepository extends JpaRepository<Brand,Integer>{
 
 }

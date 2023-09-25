@@ -1,32 +1,20 @@
 package com.work.entities.concrates;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
+@Data
+@Entity
+@RequiredArgsConstructor
 public class Brand {
 
-    private int id;
-    private String name;
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    int id;
+    String name;
 
-    public Brand() {
-    }
-
-    public Brand(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

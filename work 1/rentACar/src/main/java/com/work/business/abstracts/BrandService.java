@@ -1,9 +1,11 @@
 package com.work.business.abstracts;
 
-import com.work.entities.concrates.Brand;
+import com.work.business.concretes.requests.CreateBrandRequest;
+import com.work.business.concretes.responses.GetAllBrandsResponse;
 
 import java.util.List;
 
 public interface BrandService  {
-    List<Brand> getAll();
+    List<GetAllBrandsResponse> getAll();
+    void add(CreateBrandRequest createBrandRequest);
 }
