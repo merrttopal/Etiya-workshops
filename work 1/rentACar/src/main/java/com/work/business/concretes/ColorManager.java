@@ -8,7 +8,7 @@ import com.work.business.concretes.responses.GetAllColorResponse;
 import com.work.business.concretes.responses.GetByIdColorResponse;
 import com.work.dataAccess.abstracs.CarColorRepository;
 import com.work.entities.concrates.CarColor;
-import com.work.mappers.ModelMapperService;
+import com.work.core.mappers.ModelMapperService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@NoArgsConstructor
 @AllArgsConstructor
 public class ColorManager implements CarColorService {
 
@@ -28,9 +27,9 @@ public class ColorManager implements CarColorService {
     public List<GetAllColorResponse> getAll() {
         List<CarColor> colors = carColorRepository.findAll();
         List<GetAllColorResponse> colorResponses =
-                colors.stream().map(carColor -> this.modelMapperService.forResponse().
-                        map(carColor, GetAllColorResponse.class)).collect(Collectors.toList());
-
+                colors.stream().map(carColor -> modelMapperService.forResponse().
+                        map(carColor, GetAllColorResponse.class))
+                        .collect(Collectors.toList());
         return colorResponses;
     }
 

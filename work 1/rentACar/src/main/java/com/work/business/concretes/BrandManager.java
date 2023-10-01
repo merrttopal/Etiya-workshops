@@ -7,37 +7,47 @@ import com.work.business.concretes.responses.GetAllBrandsResponse;
 import com.work.business.concretes.responses.GetByIdBrandResponse;
 import com.work.dataAccess.abstracs.BrandRepository;
 import com.work.entities.concrates.Brand;
-import com.work.mappers.ModelMapperService;
+import com.work.core.mappers.ModelMapperService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class BrandManager implements BrandService {
 
-    final BrandRepository brandRepository;
+    private BrandRepository brandRepository;
     private ModelMapperService modelMapperService;
 
     @Override
     public List<GetAllBrandsResponse> getAll() {
-        try {
-            List<Brand> brands = brandRepository.findAll();
-            List<GetAllBrandsResponse> brandsResponses = new ArrayList<>();
-            for (Brand brand: brands) {
-                GetAllBrandsResponse responseItem = new GetAllBrandsResponse();
-                responseItem.setId(brand.getId());
-                responseItem.setName(brand.getName());
-                brandsResponses.add(responseItem);
-            }
-            return brandsResponses;
-        }catch (Exception e){
-            System.err.println(e);
-        }
+//        try {
+//            List<Brand> brands = this.brandRepository.findAll();
+//            List<GetAllBrandsResponse> brandsResponses = new ArrayList<>();
+//            for (Brand brand: brands) {
+//                GetAllBrandsResponse responseItem = new GetAllBrandsResponse();
+//                responseItem.setId(brand.getId());
+//                responseItem.setName(brand.getName());
+//                brandsResponses.add(responseItem);
+//            }
+//            return brandsResponses;
+//        }catch (Exception e){
+//            System.err.println(e);
+//        }
+//        return  null;
+        List<Brand> brands= brandRepository.findAll();
+        List<GetAllBrandsResponse> brandsResponses = brands.stream()
+                .map(brand -> modelMapperService.forResponse()
+                        .map(brand, GetAllBrandsResponse.class))
+                .collect(Collectors.toList());
 
-        return  null;
+        return brandsResponses;
+
     }
 
     public void add(CreateBrandRequest createBrandRequest) {
